@@ -131,10 +131,10 @@ public class Vendedor {
      * @return Is True if the product exists otherwise shall be False
      */
     public boolean productoExiste(String codigo) {
-    	if(repositorioProducto.obtenerPorCodigo(codigo) != null) {
-    		return true;
+    	if(repositorioProducto.obtenerPorCodigo(codigo) == null) {
+    		return false;
     	}
-        return false;
+        return true;
     }
     
     /** Check if the Product has previous warranties in the Database
