@@ -25,6 +25,7 @@ public class VendedorTest {
 	private static final String CODIGO = "AO93-RT77";
 	private static final int PRECIO = 2029000;
 	private static final String CODIGO_CON_TRES_VOCALES = "FLI-RO111";
+	
 	//Test to check that the product already has warranty 
 	@Test
 	public void productoYaTieneGarantiaTest() {
@@ -138,13 +139,32 @@ public class VendedorTest {
 		RepositorioGarantiaExtendida repositorioGarantia = mock(RepositorioGarantiaExtendida.class);
 		RepositorioProducto repositorioProducto = mock(RepositorioProducto.class); //how to use mock https://bit.ly/2X8wgmx
 		//We can simulate the add of the product to make tests 
-		when(repositorioProducto.obtenerPorCodigo(CODIGO)).thenReturn(producto);
+		when(repositorioProducto.obtenerPorCodigo(producto.getCodigo())).thenReturn(producto);
 		Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
 		
 		//act
-		boolean productoExiste = vendedor.productoExiste(CODIGO);
+		boolean productoExiste = vendedor.productoExiste(producto.getCodigo());
 		System.out.println(productoExiste);
 		//assert
 		assertTrue(productoExiste);
 	}
+	
+	//Testing that an added product can't has warranty if has 3 vowels
+		@Test
+		public void productoSinGarantiaTest() {
+			
+			//arrange
+			Producto producto = new ProductoTestDataBuilder().conNombre(COMPUTADOR_LENOVO).conNombre(CLIENTE_PRUEBA).conPrecio(PRECIO).conCodigo(CODIGO_CON_TRES_VOCALES).build();
+			RepositorioGarantiaExtendida repositorioGarantia = mock(RepositorioGarantiaExtendida.class);
+			RepositorioProducto repositorioProducto = mock(RepositorioProducto.class); //how to use mock https://bit.ly/2X8wgmx
+			//We can simulate the add of the product to make tests 
+			when(repositorioProducto.obtenerPorCodigo(producto.getCodigo())).thenReturn(producto);
+			Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
+			
+			//act
+			
+			
+			//assert
+			
+		}
 }
