@@ -6,6 +6,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 
 import dominio.Vendedor;
@@ -74,16 +78,16 @@ public class VendedorTest {
 		String prueba4 = "zXcVbNm";
 		
 		//act
-		int cprueba1 = Vendedor.NumerarVocales(prueba1);
-		int cprueba2 = Vendedor.NumerarVocales(prueba2);
-		int cprueba3 = Vendedor.NumerarVocales(prueba3);
-		int cprueba4 = Vendedor.NumerarVocales(prueba4);
+		int cPrueba1 = Vendedor.NumerarVocales(prueba1);
+		int cPrueba2 = Vendedor.NumerarVocales(prueba2);
+		int cPrueba3 = Vendedor.NumerarVocales(prueba3);
+		int cPrueba4 = Vendedor.NumerarVocales(prueba4);
 		
 		//assert
-		assertEquals(cprueba1,5);
-		assertEquals(cprueba2,3);
-		assertEquals(cprueba3, 10);
-		assertEquals(cprueba4,0);
+		assertEquals(cPrueba1,5);
+		assertEquals(cPrueba2,3);
+		assertEquals(cPrueba3, 10);
+		assertEquals(cPrueba4,0);
 		
 	}
 	
@@ -91,6 +95,33 @@ public class VendedorTest {
 	public void fechaExactaGarantiaTest() {
 		
 		//arrange
+		Calendar calendario = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		calendario.set(2018, calendario.SEPTEMBER, 4);	//Cómo utilizar Calendar en java https://bit.ly/2UanmDe
+		Date iFecha1 = calendario.getTime();
+		calendario.set(2018, calendario.OCTOBER, 15);
+		Date iFecha2 = calendario.getTime();
+		calendario.set(2018, calendario.NOVEMBER, 16);
+		Date iFecha3 = calendario.getTime();
+		calendario.set(2019, calendario.APRIL, 12);
+		Date iFecha4 = calendario.getTime();
+		calendario.set(2018, calendario.AUGUST, 16);
+		Date iFecha5 = calendario.getTime();
 		
+		//act
+		Date fFecha1 = Vendedor.fechaExactaGarantia(iFecha1,100);
+		Date fFecha2 = Vendedor.fechaExactaGarantia(iFecha2,100);
+		Date fFecha3 = Vendedor.fechaExactaGarantia(iFecha3,200);
+		Date fFecha4 = Vendedor.fechaExactaGarantia(iFecha4,9); //Testing that the warranty can't count the Monday
+		Date fFecha5 = Vendedor.fechaExactaGarantia(iFecha4,8); //Testing that the warranty can't be a Sunday
+		Date fFecha6 = Vendedor.fechaExactaGarantia(iFecha5,200);
+		
+		//assert
+		assertEquals(sdf.format(fFecha1), "2018-12-29");
+		assertEquals(sdf.format(fFecha2), "2019-02-09");
+		assertEquals(sdf.format(fFecha3), "2019-07-08");
+		assertEquals(sdf.format(fFecha4), "2019-04-22");
+		assertEquals(sdf.format(fFecha5), "2019-04-22");
+		assertEquals(sdf.format(fFecha6), "2019-04-06");
 	}
 }
