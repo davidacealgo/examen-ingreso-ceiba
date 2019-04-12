@@ -18,10 +18,7 @@ import testdatabuilder.ProductoTestDataBuilder;
 public class VendedorTest {
 
 	private static final String CLIENTE_PRUEBA = "DAVID";
-	private static final String COMPUTADOR_LENOVO = "Computador Lenovo";
-	private static final String CODIGO = "AO93-RT77";
-	private static final int PRECIO = 2029000;
-	private static final String CODIGO_CON_TRES_VOCALES = "FLI-RO111";
+	private static final String HUAWEI_P20 = "HUAWEI P20";
 	
 	private SistemaDePersistencia sistemaPersistencia;
 	
@@ -49,7 +46,7 @@ public class VendedorTest {
 	public void generarGarantiaTest() {
 
 		// arrange
-		Producto producto = new ProductoTestDataBuilder().conNombre(COMPUTADOR_LENOVO).build();
+		Producto producto = new ProductoTestDataBuilder().conNombre(HUAWEI_P20).build();
 		repositorioProducto.agregar(producto);
 		Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
 
@@ -66,7 +63,7 @@ public class VendedorTest {
 	public void productoYaTieneGarantiaTest() {
 
 		// arrange
-		Producto producto = new ProductoTestDataBuilder().conNombre(COMPUTADOR_LENOVO).build();
+		Producto producto = new ProductoTestDataBuilder().conNombre(HUAWEI_P20).build();
 		
 		repositorioProducto.agregar(producto);
 		

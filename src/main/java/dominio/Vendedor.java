@@ -35,7 +35,7 @@ public class Vendedor {
 			throw new GarantiaExtendidaException(PRODUCTO_NO_EXISTE);
 		if(NumerarVocales(codigo)>=3)
 			throw new GarantiaExtendidaException(PRODUCTO_SIN_GARANTIA);
-		if(tieneGarantia(codigo))
+		if(tieneGarantia(codigo)==true)
 			throw new GarantiaExtendidaException(EL_PRODUCTO_TIENE_GARANTIA);
 		
 		//Already exists the product, can be store in the variable product
@@ -142,11 +142,9 @@ public class Vendedor {
      * @return True if the product & the warranty exists in the Database otherwise shall be F
      */
     public boolean tieneGarantia(String codigo) {
-    	Producto producto = repositorioProducto.obtenerPorCodigo(codigo);
-    	if(producto != null && repositorioGarantia.obtener(codigo) != null) {
-    		return true;
+    	if(repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo) == null) {
+    		return false;
     	}
-        return false;
+        return true;
     }
-
 }
