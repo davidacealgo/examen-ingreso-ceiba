@@ -69,7 +69,7 @@ public class Vendedor {
      * @param codigo 
      * @return the number of vocals in the code
      */
-    public int NumerarVocales(String codigo){
+    public static int NumerarVocales(String codigo){
     	int vocales=0,i=0;
     	char posicion = '\u0000';
     	while(i < codigo.length()){
@@ -109,7 +109,7 @@ public class Vendedor {
      * @param dias Number of days, can be 200 or 100
      * @return the final date of the warranty 
      */
-    public Date fechaExactaGarantia(Date fechaInicial, int dias) {
+    public static Date fechaExactaGarantia(Date fechaInicial, int dias) {
     	int i=0;
     	Calendar calendario = Calendar.getInstance();
     	calendario.setTime(fechaInicial);
