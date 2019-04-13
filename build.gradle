@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 jar {
 	baseName = 'biblioteca'
