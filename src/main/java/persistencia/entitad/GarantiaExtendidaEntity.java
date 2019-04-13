@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-
+//is used to refer to the entity in queries.
 @Entity(name = "GarantiaExtendida")
+//Is used to make the query searching by code
 @NamedQuery(name = "GarantiaExtendida.findByCodigo", query = "SELECT garantia from GarantiaExtendida garantia where garantia.producto.codigo = :codigo")
 public class GarantiaExtendidaEntity {
 
+	//Defines the id of the entity 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

@@ -7,6 +7,10 @@ public class ProductoBuilder {
 	
 	private ProductoBuilder() {}
 	
+	/** Static method to change an entity table into a product object
+	 * @param productoEntity Entity of the table product
+	 * @return a product object
+	 */
 	public static Producto convertirADominio(ProductoEntity productoEntity) {
 		
 		Producto producto = null;
@@ -18,6 +22,10 @@ public class ProductoBuilder {
 		return producto;
 	}
 	
+	/** Static method to change an object to an entity
+	 * @param producto object product
+	 * @return a product entity
+	 */
 	public static ProductoEntity convertirAEntity(Producto producto) {
 		
 		ProductoEntity productoEntity = new ProductoEntity();
