@@ -15,7 +15,7 @@ public class Vendedor {
     //Variables to access on the database
     private RepositorioProducto repositorioProducto;
     private RepositorioGarantiaExtendida repositorioGarantia;
-    /**Constructor builder class
+    /**Builder class
      * @param repositorioProducto Is used to manage the product table
      * @param repositorioGarantia Id used to manage the extended warranty table
      */
@@ -66,7 +66,7 @@ public class Vendedor {
     
     /**
      * Check if the code of the product has at least three vocals
-     * @param codigo 
+     * @param codigo Code that will be check
      * @return the number of vocals in the code
      */
     public static int NumerarVocales(String codigo){
@@ -115,11 +115,12 @@ public class Vendedor {
     	calendario.setTime(fechaInicial);
     	
     	while(i<dias) {
+    		//Can't count Mondays in the amount days
     		if(calendario.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
     			i++;
     		calendario.add(Calendar.DAY_OF_MONTH,1);
     	}
-    	
+    	//Exact day of warranty can't be a Sunday
     	if(calendario.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
     		calendario.add(Calendar.DAY_OF_MONTH,1);
     	
