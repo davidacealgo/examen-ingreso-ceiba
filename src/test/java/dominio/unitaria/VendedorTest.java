@@ -3,6 +3,7 @@ package dominio.unitaria;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,9 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import dominio.Vendedor;
+import dominio.excepcion.GarantiaExtendidaException;
 import dominio.Producto;
 import dominio.repositorio.RepositorioProducto;
 import dominio.repositorio.RepositorioGarantiaExtendida;
@@ -24,7 +27,7 @@ public class VendedorTest {
 	private static final String COMPUTADOR_LENOVO = "Computador Lenovo";
 	private static final String CODIGO = "AO93-RT77";
 	private static final int PRECIO = 2029000;
-	private static final String CODIGO_CON_TRES_VOCALES = "FLI-RO111";
+	private static final String CODIGO_CON_TRES_VOCALES = "FLI-aOe11";
 	
 	//Test to check that the product already has warranty 
 	@Test
@@ -103,15 +106,15 @@ public class VendedorTest {
 		//arrange
 		Calendar calendario = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		calendario.set(2018, calendario.SEPTEMBER, 4);	//Cómo utilizar Calendar en java https://bit.ly/2UanmDe
+		calendario.set(2018, Calendar.SEPTEMBER, 4);	//Cómo utilizar Calendar en java https://bit.ly/2UanmDe
 		Date iFecha1 = calendario.getTime();
-		calendario.set(2018, calendario.OCTOBER, 15);
+		calendario.set(2018, Calendar.OCTOBER, 15);
 		Date iFecha2 = calendario.getTime();
-		calendario.set(2018, calendario.NOVEMBER, 16);
+		calendario.set(2018, Calendar.NOVEMBER, 16);
 		Date iFecha3 = calendario.getTime();
-		calendario.set(2019, calendario.APRIL, 12);
+		calendario.set(2019, Calendar.APRIL, 12);
 		Date iFecha4 = calendario.getTime();
-		calendario.set(2018, calendario.AUGUST, 16);
+		calendario.set(2018, Calendar.AUGUST, 16);
 		Date iFecha5 = calendario.getTime();
 		
 		//act
@@ -144,7 +147,6 @@ public class VendedorTest {
 		
 		//act
 		boolean productoExiste = vendedor.productoExiste(producto.getCodigo());
-		System.out.println(productoExiste);
 		//assert
 		assertTrue(productoExiste);
 	}
@@ -161,10 +163,14 @@ public class VendedorTest {
 			when(repositorioProducto.obtenerPorCodigo(producto.getCodigo())).thenReturn(producto);
 			Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
 			
-			//act
-			
-			
-			//assert
-			
+			// act
+			try {
+				vendedor.generarGarantia(producto.getCodigo(),CLIENTE_PRUEBA);
+				fail();
+				
+			} catch (GarantiaExtendidaException e) {
+				// assert
+				Assert.assertEquals(Vendedor.PRODUCTO_SIN_GARANTIA, e.getMessage());
+			}
 		}
 }

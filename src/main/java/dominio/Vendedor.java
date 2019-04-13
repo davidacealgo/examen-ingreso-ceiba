@@ -12,12 +12,12 @@ public class Vendedor {
     public static final String PRODUCTO_NO_EXISTE = "Este producto no se encuentra en nuestra base de datos";
     public static final String PRODUCTO_SIN_GARANTIA = "Este producto no cuenta con garantia extendida"; 
    
-    //Variables para acceder a la Base de datos
+    //Variables to access on the database
     private RepositorioProducto repositorioProducto;
     private RepositorioGarantiaExtendida repositorioGarantia;
-    /**Constructor clase vendedor
-     * @param repositorioProducto Se encarga de administrar la tabla de productos
-     * @param repositorioGarantia Se encarga de administrar la tabla de garantias extendidas
+    /**Constructor builder class
+     * @param repositorioProducto Is used to manage the product table
+     * @param repositorioGarantia Id used to manage the extended warranty table
      */
     public Vendedor(RepositorioProducto repositorioProducto, RepositorioGarantiaExtendida repositorioGarantia) {
         this.repositorioProducto = repositorioProducto;
@@ -25,9 +25,9 @@ public class Vendedor {
 
     }
     /**
-     * @param codigo Sirve para generar la garantia extendida del producto
-     * @param cliente Nombre del cliente para asociarle la garantia extendida del producto
-     * @throws GarantiaExtendidaException Maneja las excepciones al crear la garantia extendida
+     * @param codigo Is used to create the extended warranty of the product
+     * @param cliente Client name used to involve the extended warranty
+     * @throws GarantiaExtendidaException Manage the exceptions when creates the extended warranty
      */
     public void generarGarantia(String codigo, String cliente) throws GarantiaExtendidaException {
     	
