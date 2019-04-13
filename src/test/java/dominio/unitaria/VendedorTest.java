@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import dominio.Vendedor;
 import dominio.excepcion.GarantiaExtendidaException;
+import dominio.GarantiaExtendida;
 import dominio.Producto;
 import dominio.repositorio.RepositorioProducto;
 import dominio.repositorio.RepositorioGarantiaExtendida;
@@ -27,6 +28,7 @@ public class VendedorTest {
 	private static final String COMPUTADOR_LENOVO = "Computador Lenovo";
 	private static final String CODIGO = "AO93-RT77";
 	private static final int PRECIO = 2029000;
+	private static final int PRECIO1 = 200000;
 	private static final String CODIGO_CON_TRES_VOCALES = "FLI-aOe11";
 	
 	//Test to check that the product already has warranty 
@@ -95,7 +97,7 @@ public class VendedorTest {
 		//assert
 		assertEquals(cPrueba1,5);
 		assertEquals(cPrueba2,3);
-		assertEquals(cPrueba3, 10);
+		assertEquals(cPrueba3,10);
 		assertEquals(cPrueba4,0);
 		
 	}
@@ -147,8 +149,10 @@ public class VendedorTest {
 		
 		//act
 		boolean productoExiste = vendedor.productoExiste(producto.getCodigo());
+		boolean productoNoExiste = vendedor.productoExiste(CODIGO_CON_TRES_VOCALES);
 		//assert
 		assertTrue(productoExiste);
+		assertFalse(productoNoExiste);
 	}
 	
 	//Testing that an added product can't has warranty if has 3 vowels
@@ -172,5 +176,31 @@ public class VendedorTest {
 				// assert
 				Assert.assertEquals(Vendedor.PRODUCTO_SIN_GARANTIA, e.getMessage());
 			}
+		}
+		
+		//Testing the price of the warranty 
+		@Test
+		public void precioGarantiaTest() {
+			//Variables to create an object
+			Calendar calendario = Calendar.getInstance();
+			calendario.set(2018, Calendar.AUGUST, 16);
+			Date inicioFecha = calendario.getTime();
+			Date finalFecha = Vendedor.fechaExactaGarantia(inicioFecha,200);
+			Producto producto = new ProductoTestDataBuilder().conNombre(COMPUTADOR_LENOVO).conNombre(CLIENTE_PRUEBA).conPrecio(PRECIO).conCodigo(CODIGO).build();
+			RepositorioGarantiaExtendida repositorioGarantia = mock(RepositorioGarantiaExtendida.class);
+			RepositorioProducto repositorioProducto = mock(RepositorioProducto.class); //how to use mock https://bit.ly/2X8wgmx
+			//We can simulate the add of the product to make tests 
+			when(repositorioProducto.obtenerPorCodigo(producto.getCodigo())).thenReturn(producto);
+			Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
+			GarantiaExtendida garantia = new GarantiaExtendida(producto,inicioFecha,finalFecha,PRECIO1,CLIENTE_PRUEBA);
+			//act
+			try {
+				vendedor.generarGarantia(producto.getCodigo(),CLIENTE_PRUEBA);
+			}
+			catch(GarantiaExtendidaException e){
+				//assert
+				Assert.assertEquals(20000, garantia.getPrecioGarantia(),100);
+			}
+			
 		}
 }

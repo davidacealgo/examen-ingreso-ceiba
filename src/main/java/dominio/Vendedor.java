@@ -31,12 +31,15 @@ public class Vendedor {
      */
     public void generarGarantia(String codigo, String cliente) throws GarantiaExtendidaException {
     	
-    	if(!productoExiste(codigo))
+    	if(!productoExiste(codigo)){
 			throw new GarantiaExtendidaException(PRODUCTO_NO_EXISTE);
-		if(NumerarVocales(codigo)>=3)
+    	}
+		if(NumerarVocales(codigo)>=3) {
 			throw new GarantiaExtendidaException(PRODUCTO_SIN_GARANTIA);
-		if(tieneGarantia(codigo)==true)
+		}
+		if(tieneGarantia(codigo)==true) {
 			throw new GarantiaExtendidaException(EL_PRODUCTO_TIENE_GARANTIA);
+		}
 		
 		//Already exists the product, can be store in the variable product
 		Producto producto = repositorioProducto.obtenerPorCodigo(codigo);
@@ -49,7 +52,7 @@ public class Vendedor {
 		if(precioProducto > 500000) {
 			precioGarantia = precioProducto*0.2;
 			diasGarantia = 200;
-			
+		//When is less of 500000 the product has 100 days and 10 percent in the warranty	
 		}else {
 			precioGarantia = precioProducto*0.1;
 			diasGarantia = 100;

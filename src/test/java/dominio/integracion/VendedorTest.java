@@ -19,6 +19,7 @@ public class VendedorTest {
 
 	private static final String CLIENTE_PRUEBA = "DAVID";
 	private static final String HUAWEI_P20 = "HUAWEI P20";
+	private static final int PRECIO = 499999;
 	
 	private SistemaDePersistencia sistemaPersistencia;
 	
@@ -46,10 +47,10 @@ public class VendedorTest {
 	public void generarGarantiaTest() {
 
 		// arrange
-		Producto producto = new ProductoTestDataBuilder().conNombre(HUAWEI_P20).build();
+		Producto producto = new ProductoTestDataBuilder().conNombre(HUAWEI_P20).conPrecio(PRECIO).build();
 		repositorioProducto.agregar(producto);
 		Vendedor vendedor = new Vendedor(repositorioProducto, repositorioGarantia);
-
+		
 		// act
 		vendedor.generarGarantia(producto.getCodigo(),CLIENTE_PRUEBA);
 
