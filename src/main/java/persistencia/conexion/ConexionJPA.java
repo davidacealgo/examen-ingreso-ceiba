@@ -19,7 +19,7 @@ public class ConexionJPA {
 	}
 	
 	/**Can create an entity to manage the database
-	 * @return
+	 * @return return
 	 */
 	public EntityManager createEntityManager() {
 		return entityManagerFactory.createEntityManager();
